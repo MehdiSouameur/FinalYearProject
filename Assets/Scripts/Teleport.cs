@@ -35,5 +35,15 @@ public class Teleport : MonoBehaviour
         gameObject.transform.position = new Vector3(newX, newY, newZ);
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+
+        if (other.gameObject.tag == "Wall")
+        {
+
+            newPos();
+        }
+    }
+
 
 }
