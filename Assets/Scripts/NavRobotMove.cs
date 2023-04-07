@@ -9,21 +9,57 @@ public class NavRobotMove : MonoBehaviour
 
     [SerializeField] private Transform movePositionTransform;
 
-    GameObject TargetObject;
-
     private NavMeshAgent navMeshAgent;
+
+    public bool experimentStatus = true; //Experiment status
+
+    GameObject TargetObject;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        TargetObject = GameObject.Find("Target");
     }
 
 
     // Update is called once per frame
     void Update()
     {
-      navMeshAgent.destination = movePositionTransform.position;
+        //Only move if experiment is played
+        if (experimentStatus)
+        {
+            moveRobot();
+        }
+    }
+
+    public void moveRobot()
+    {
+        if (GameObject.FindWithTag("Target") != null)
+        {
+            selectTarget();
+            navMeshAgent.enabled = true;
+            navMeshAgent.destination = TargetObject.transform.position;
+        }
+
+        else if (GameObject.FindWithTag("Target") == null)
+        {
+            navMeshAgent.enabled = false;
+        }
+    }
+
+    public void selectTarget()
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
+        float closestDistance = float.MaxValue;
+
+        foreach (GameObject target in targets)
+        {
+            float distance = Vector3.Distance(transform.position, target.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                TargetObject = target;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -34,6 +70,21 @@ public class NavRobotMove : MonoBehaviour
 
             Teleport targetTeleport = TargetObject.GetComponent<Teleport>();
             targetTeleport.newPos();
+        }
+    }
+
+    //Pause or play experiment
+    public void pausePlayExperiment()
+    {
+        if (experimentStatus)
+        {
+            experimentStatus = false;
+            navMeshAgent.enabled = false;
+        }
+        else
+        {
+            experimentStatus = true;
+            navMeshAgent.enabled = true;
         }
     }
 
