@@ -15,10 +15,10 @@ public class buttonPress : MonoBehaviour
         robotStatus = GameObject.FindGameObjectWithTag("Robot").GetComponent<NavRobotMove>();
     }
 
+    //Function of the button
     public void buttonFunction()
     {
-        //Play animation
-        PlayAnimation();
+        PlayAnimation();//Play animation
         robotStatus.pausePlayExperiment(); //Pause/play experiment
     }
 

@@ -9,6 +9,9 @@ TagManager:
   - Wall
   - Interactable
   - Robot
+  - PausePlayButton
+  - AddTargetButton
+  - RemoveTargetButton
   layers:
   - Default
   - TransparentFX
