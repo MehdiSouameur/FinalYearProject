@@ -20,8 +20,10 @@ public class addTarget : MonoBehaviour
     public void buttonFunction()
     {
         PlayAnimation(); //Play animation
+
         Vector3 spawnPosition = new Vector3(0, 0, 0); //New position
         GameObject newTarget = Instantiate(target, spawnPosition, Quaternion.identity); //Spawn new target
+
         teleportScript = newTarget.GetComponent<Teleport>();
         teleportScript.newPos();
     }

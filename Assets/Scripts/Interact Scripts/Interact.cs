@@ -15,11 +15,21 @@ public class Interact : MonoBehaviour
     private const string PausePlayTag = "PausePlayButton";
     private const string AddTargetTag = "AddTargetButton";
     private const string RemoveTargetTag = "RemoveTargetButton";
+    private const string NextFeedTag = "NextFeedButton";
+    private const string elevatorTag = "ElevatorButton";
+    private const string PreviousFeedTag = "PreviousFeedButton";
+    private const string speedTag = "SpeedButton";
+    private const string slowTag = "SlowButton";
+    private const string addRobotTag = "AddRobotButton";
 
     //Script components on buttons
     private buttonPress playButton;
     private addTarget addTargetButton;
     private removeTarget removeTargetButton;
+    private nextFeed nextFeedButton;
+    private closeElevator elevatorScript;
+    private robotSpeed speedScript;
+    private robotCountScript updateRobotScript;
 
     private void Update()
     {
@@ -45,6 +55,36 @@ public class Interact : MonoBehaviour
             if (hit.collider.CompareTag(RemoveTargetTag))
             {
                 minusTarget(hit);
+            }
+
+            if (hit.collider.CompareTag(NextFeedTag))
+            {
+                NextFeed(hit);
+            }
+
+            if (hit.collider.CompareTag(PreviousFeedTag))
+            {
+                PreviousFeed(hit);
+            }
+
+            if (hit.collider.CompareTag(elevatorTag))
+            {
+                closeElevatorFunction(hit);
+            }
+
+            if (hit.collider.CompareTag(speedTag))
+            {
+                addRobotSpeed(hit);
+            }
+
+            if (hit.collider.CompareTag(slowTag))
+            {
+                removeRobotSpeed(hit);
+            }
+
+            if (hit.collider.CompareTag(addRobotTag))
+            {
+                addOneRobot(hit);
             }
 
         }
@@ -85,6 +125,76 @@ public class Interact : MonoBehaviour
         if (Input.GetKeyDown(pressButtonKey))
         {
             removeTargetButton.buttonFunction();
+        }
+    }
+
+    //Next Feed Button
+    private void NextFeed(RaycastHit hit)
+    {
+        Debug.Log("Feed pressed");
+        nextFeedButton = hit.collider.gameObject.GetComponent<nextFeed>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            nextFeedButton.followingFeed();
+        }
+    }
+
+    //Previous Feed Button
+    private void PreviousFeed(RaycastHit hit)
+    {
+        Debug.Log("Feed pressed");
+        nextFeedButton = hit.collider.gameObject.GetComponent<nextFeed>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            nextFeedButton.previousFeed();
+        }
+    }
+
+    //Elevator Button
+    private void closeElevatorFunction(RaycastHit hit)
+    {
+
+        elevatorScript = hit.collider.gameObject.GetComponent<closeElevator>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            elevatorScript.buttonFunction();
+        }
+    }
+
+    //Add robot speed button
+    private void addRobotSpeed(RaycastHit hit)
+    {
+
+        speedScript = hit.collider.gameObject.GetComponent<robotSpeed>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            speedScript.addSpeed();
+        }
+    }
+
+    private void removeRobotSpeed(RaycastHit hit)
+    {
+
+        speedScript = hit.collider.gameObject.GetComponent<robotSpeed>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            speedScript.removeSpeed();
+        }
+    }
+
+    private void addOneRobot(RaycastHit hit)
+    {
+
+        updateRobotScript = hit.collider.gameObject.GetComponent<robotCountScript>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            updateRobotScript.addRobot();
         }
     }
 

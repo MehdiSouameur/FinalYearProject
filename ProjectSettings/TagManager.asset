@@ -12,6 +12,13 @@ TagManager:
   - PausePlayButton
   - AddTargetButton
   - RemoveTargetButton
+  - SecurityCam
+  - ElevatorButton
+  - NextFeedButton
+  - PreviousFeedButton
+  - SpeedButton
+  - SlowButton
+  - AddRobotButton
   layers:
   - Default
   - TransparentFX

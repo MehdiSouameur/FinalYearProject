@@ -24,6 +24,6 @@ public class buttonPress : MonoBehaviour
 
     public void PlayAnimation()
     {
-        buttonAnim.Play("ButtonPress", 0, 0.0f);
+        buttonAnim.Play("playAnim", 0, 0.0f);
     }
 }
