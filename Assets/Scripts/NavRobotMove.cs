@@ -29,6 +29,10 @@ public class NavRobotMove : MonoBehaviour
         {
             moveRobot();
         }
+        else
+        {
+            navMeshAgent.destination = gameObject.transform.position;
+        }
     }
 
     public void moveRobot()
@@ -79,12 +83,13 @@ public class NavRobotMove : MonoBehaviour
         if (experimentStatus)
         {
             experimentStatus = false;
-            navMeshAgent.enabled = false;
+            navMeshAgent.isStopped = true;
         }
+
         else
         {
             experimentStatus = true;
-            navMeshAgent.enabled = true;
+            navMeshAgent.isStopped = false;
         }
     }
 

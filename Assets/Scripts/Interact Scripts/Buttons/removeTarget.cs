@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class removeTarget : MonoBehaviour
 {
     private Animator buttonAnim; //Animator component
     private const string TargetTag = "Target";
+
+    [SerializeField] TMP_Text text;
 
     private void Awake()
     {
@@ -14,11 +17,12 @@ public class removeTarget : MonoBehaviour
 
     public void buttonFunction()
     {
-        PlayAnimation(); //Play animation
 
         GameObject[] targets = GameObject.FindGameObjectsWithTag(TargetTag);
 
         destroyTarget(targets);
+
+        text.text = (targets.Length).ToString();
 
     }
 

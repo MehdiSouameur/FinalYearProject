@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public class robotSpeed : MonoBehaviour
 {
     [SerializeField] float increment = 3.5f;
+    [SerializeField] TMP_Text text;
 
     private Animator buttonAnim; //Animator component
 
@@ -17,7 +19,6 @@ public class robotSpeed : MonoBehaviour
 
     public void addSpeed()
     {
-        buttonAnim.Play("ButtonPress", 0, 0.0f);
 
         GameObject[] robots = GameObject.FindGameObjectsWithTag("Robot");
 
@@ -25,13 +26,15 @@ public class robotSpeed : MonoBehaviour
         {
             NavMeshAgent agent = robot.GetComponent<NavMeshAgent>();
             agent.speed = agent.speed + increment;
+            text.text = (agent.speed).ToString();
         }
+
+        
 
     }
 
     public void removeSpeed()
     {
-        buttonAnim.Play("ButtonPress", 0, 0.0f);
 
         GameObject[] robots = GameObject.FindGameObjectsWithTag("Robot");
 
@@ -39,6 +42,7 @@ public class robotSpeed : MonoBehaviour
         {
             NavMeshAgent agent = robot.GetComponent<NavMeshAgent>();
             agent.speed = agent.speed - increment;
+            text.text = (agent.speed).ToString();
         }
 
     }

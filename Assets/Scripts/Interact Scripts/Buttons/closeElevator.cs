@@ -8,6 +8,8 @@ public class closeElevator : MonoBehaviour
     private Animator doorAnim; //Animator component
     [SerializeField] GameObject elevatorDoors;
 
+    bool open = false;
+
     private void Awake()
     {
         doorAnim = elevatorDoors.GetComponent<Animator>();
@@ -15,8 +17,17 @@ public class closeElevator : MonoBehaviour
 
     public void buttonFunction()
     {
-        doorAnim.Play("OpenClose", 0, 0.0f);
-        StartCoroutine(WaitThenCallMethod(2f));
+        if (open)
+        {
+            doorAnim.Play("Close", 0, 0.0f);
+            StartCoroutine(WaitThenCallMethod(2f));
+            open = !open;
+        }
+        else
+        {
+            doorAnim.Play("Open", 0, 0.0f);
+            open = !open;
+        }
     }
 
     IEnumerator WaitThenCallMethod(float waitTime)
