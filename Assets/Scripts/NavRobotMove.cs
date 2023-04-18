@@ -71,7 +71,7 @@ public class NavRobotMove : MonoBehaviour
 
         if (other.gameObject.tag == "Target")
         {
-
+            Debug.Log("Robot collided with Target");
             Teleport targetTeleport = TargetObject.GetComponent<Teleport>();
             targetTeleport.newPos();
         }

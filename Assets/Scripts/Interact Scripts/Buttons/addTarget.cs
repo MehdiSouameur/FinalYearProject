@@ -1,43 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using TMPro;
 
 public class addTarget : MonoBehaviour
 {
+    [SerializeField] GameObject levelCenter;
+    [SerializeField] GameObject targetPrefab;
 
-    //Target object to duplicate
-    [SerializeField] GameObject target;
-    [SerializeField] TMP_Text text;
-    private Teleport teleportScript; //Teleport script component
+    public float range = 10.0f;
 
-    private Animator buttonAnim; //Animator component
-
-    private void Awake()
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
-        buttonAnim = gameObject.GetComponent<Animator>();
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+        result = Vector3.zero;
+        return false;
     }
 
-    //Function of the button
+    void OnDrawGizmos()
+    {
+        Vector3 point;
+        if (RandomPoint(transform.position, range, out point))
+        {
+            Gizmos.DrawSphere(point, 0.1f);
+        }
+    }
+
     public void buttonFunction()
     {
-
-        Vector3 spawnPosition = new Vector3(0, 0, 0); //New position
-        GameObject newTarget = Instantiate(target, spawnPosition, Quaternion.identity); //Spawn new target
-
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
-        teleportScript = newTarget.GetComponent<Teleport>();
-        teleportScript.newPos();
-        text.text = (targets.Length).ToString();
+        Vector3 point;
+        RandomPoint(levelCenter.transform.position, range, out point);
+        GameObject newTarget = Instantiate(targetPrefab, point, Quaternion.identity);
+        BoxCollider boxCollider = newTarget.GetComponent<BoxCollider>();
+        boxCollider.isTrigger = false;
+        newTarget.tag = "Target";
     }
 
-    public void spawnTarget(Vector3 spawnPosition)
-    {
-        GameObject newTarget = Instantiate(target, spawnPosition, Quaternion.identity);
-    }
-
-    public void PlayAnimation()
-    {
-        buttonAnim.Play("ButtonPress", 0, 0.0f);
-    }
 }

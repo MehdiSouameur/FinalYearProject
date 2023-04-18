@@ -21,6 +21,13 @@ public class Interact : MonoBehaviour
     private const string speedTag = "SpeedButton";
     private const string slowTag = "SlowButton";
     private const string addRobotTag = "AddRobotButton";
+    private const string removeRobotTag = "RemoveRobotButton";
+    private const string LevelTwoTag = "LevelTwo";
+    private const string ResetTag = "ResetButton";
+    private const string lowerTag = "lowerButton";
+    private const string riseTag = "riseButton";
+    private const string adjustArmTag = "armHeight";
+    private const string adjustHandTag = "handButton";
 
     //Script components on buttons
     private buttonPress playButton;
@@ -30,6 +37,9 @@ public class Interact : MonoBehaviour
     private closeElevator elevatorScript;
     private robotSpeed speedScript;
     private robotCountScript updateRobotScript;
+    private newMazeScript levelTwoScript;
+    private resetLevel resetLevelScript;
+    private armAnimate armAnimateScript;
 
     private void Update()
     {
@@ -87,8 +97,60 @@ public class Interact : MonoBehaviour
                 addOneRobot(hit);
             }
 
+            if (hit.collider.CompareTag(removeRobotTag))
+            {
+                removeOneRobot(hit);
+            }
+
+            if (hit.collider.CompareTag(LevelTwoTag))
+            {
+                switchToLevelTwo(hit);
+            }
+
+            if (hit.collider.CompareTag(ResetTag))
+            {
+                resetLevel(hit);
+            }
+
+            if (hit.collider.CompareTag(adjustArmTag))
+            {
+                lever(hit);
+            }
+
+            if (hit.collider.CompareTag(adjustHandTag))
+            {
+                hand(hit);
+            }
+
         }
     }
+
+    //Adjust Robot hand
+    private void hand(RaycastHit hit)
+    {
+
+        armAnimateScript = hit.collider.gameObject.GetComponent<armAnimate>();
+
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            armAnimateScript.adjustHand();
+        }
+    }
+
+    //Adjust Robot Arm
+    private void lever(RaycastHit hit)
+    {
+
+        armAnimateScript = hit.collider.gameObject.GetComponent<armAnimate>();
+
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            armAnimateScript.adjustHeight();
+        }
+    }
+
 
     //Pause or play experiment button
     private void pausePlay(RaycastHit hit)
@@ -187,6 +249,7 @@ public class Interact : MonoBehaviour
         }
     }
 
+    //Add a robot
     private void addOneRobot(RaycastHit hit)
     {
 
@@ -196,6 +259,44 @@ public class Interact : MonoBehaviour
         {
             updateRobotScript.addRobot();
         }
+    }
+
+    //Remove a robot
+    private void removeOneRobot(RaycastHit hit)
+    {
+
+        updateRobotScript = hit.collider.gameObject.GetComponent<robotCountScript>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            updateRobotScript.removeRobot();
+        }
+    }
+
+    //Remove a robot
+    private void switchToLevelTwo(RaycastHit hit)
+    {
+
+        levelTwoScript = hit.collider.gameObject.GetComponent<newMazeScript>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            levelTwoScript.secondLevel();
+        }
+
+    }
+
+    //Reset Level
+    private void resetLevel(RaycastHit hit)
+    {
+
+        resetLevelScript = hit.collider.gameObject.GetComponent<resetLevel>();
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            resetLevelScript.reset();
+        }
+
     }
 
 }

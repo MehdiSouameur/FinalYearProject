@@ -19,6 +19,16 @@ TagManager:
   - SpeedButton
   - SlowButton
   - AddRobotButton
+  - RemoveRobotButton
+  - clonableRobot
+  - LevelTwo
+  - ResetButton
+  - clonableTarget
+  - archerTarget
+  - currentArrow
+  - robotFinger
+  - armHeight
+  - handButton
   layers:
   - Default
   - TransparentFX
@@ -29,7 +39,7 @@ TagManager:
   - Robot
   - Invisible
   - Interact
-  - 
+  - Arrow
   - 
   - 
   - 

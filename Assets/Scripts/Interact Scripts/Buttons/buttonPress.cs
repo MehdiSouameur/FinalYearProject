@@ -15,19 +15,23 @@ public class buttonPress : MonoBehaviour
     private void Awake()
     {
         buttonAnim = gameObject.GetComponent<Animator>();
-        robotStatus = GameObject.FindGameObjectWithTag("Robot").GetComponent<NavRobotMove>();
     }
 
     //Function of the button
     public void buttonFunction()
     {
         PlayAnimation();//Play animation
-        robotStatus.pausePlayExperiment(); //Pause/play experiment
-        status = !status;
-        if (status)
-            text.text = "Active";
-        else
-            text.text = "Inactive";
+        if(GameObject.FindGameObjectWithTag("Robot") != null)
+        {
+            robotStatus = GameObject.FindGameObjectWithTag("Robot").GetComponent<NavRobotMove>();
+
+            robotStatus.pausePlayExperiment(); //Pause/play experiment
+            status = !status;
+            if (status)
+                text.text = "Active";
+            else
+                text.text = "Inactive";
+        }
     }
 
     public void PlayAnimation()
