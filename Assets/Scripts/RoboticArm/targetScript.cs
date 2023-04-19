@@ -28,13 +28,19 @@ public class targetScript : MonoBehaviour
             Debug.Log("Object released!");
             transform.SetParent(null);
             rb.useGravity = true;
+            grabbed = false;
+        }
+
+        if (grabbed)
+        {
+            transform.position = spawn.position;
         }
     }
 
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "robotFinger" && handScript.gripped)
+        if (other.gameObject.tag == "robotFinger" && handScript.gripped && !grabbed)
         {
 
             Debug.Log("Object Gripped");

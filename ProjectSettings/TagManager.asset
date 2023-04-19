@@ -29,6 +29,11 @@ TagManager:
   - robotFinger
   - armHeight
   - handButton
+  - caseForward
+  - caseBackward
+  - caseLeft
+  - caseRight
+  - spawnTargetButton
   layers:
   - Default
   - TransparentFX
@@ -40,8 +45,8 @@ TagManager:
   - Invisible
   - Interact
   - Arrow
-  - 
-  - 
+  - robotArm
+  - test
   - 
   - 
   - 

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Interact : MonoBehaviour
 {
-    [SerializeField] private int rayLength = 5;
+    [SerializeField] private int rayLength = 10;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private string excludeLayerName = null;
     [SerializeField] private KeyCode pressButtonKey = KeyCode.Mouse0;
 
     private bool doOnce;
 
-    //Tags for different buttons
+    /*Tags for different buttons*/
+
+    //Maze Nav Tags:
     private const string PausePlayTag = "PausePlayButton";
     private const string AddTargetTag = "AddTargetButton";
     private const string RemoveTargetTag = "RemoveTargetButton";
@@ -24,10 +26,17 @@ public class Interact : MonoBehaviour
     private const string removeRobotTag = "RemoveRobotButton";
     private const string LevelTwoTag = "LevelTwo";
     private const string ResetTag = "ResetButton";
+
+    //Robotic Arm Tags
     private const string lowerTag = "lowerButton";
     private const string riseTag = "riseButton";
     private const string adjustArmTag = "armHeight";
     private const string adjustHandTag = "handButton";
+    private const string caseForwardTag = "caseForward";
+    private const string caseBackwardTag = "caseBackward";
+    private const string caseLeftTag = "caseLeft";
+    private const string caseRightTag = "caseRight";
+    private const string newTargetTag = "spawnTargetButton";
 
     //Script components on buttons
     private buttonPress playButton;
@@ -40,6 +49,8 @@ public class Interact : MonoBehaviour
     private newMazeScript levelTwoScript;
     private resetLevel resetLevelScript;
     private armAnimate armAnimateScript;
+    private moveArm moveArmScript;
+    private spawnTarget spawnTargetScript;
 
     private void Update()
     {
@@ -122,6 +133,118 @@ public class Interact : MonoBehaviour
                 hand(hit);
             }
 
+            if (hit.collider.CompareTag(caseForwardTag))
+            {
+                moveCaseForward(hit);
+            }
+
+            if (hit.collider.CompareTag(caseBackwardTag))
+            {
+                moveCaseBackward(hit);
+            }
+
+            if (hit.collider.CompareTag(caseLeftTag))
+            {
+                moveCaseLeft(hit);
+            }
+
+            if (hit.collider.CompareTag(caseRightTag))
+            {
+                moveCaseRight(hit);
+            }
+
+            if (hit.collider.CompareTag(newTargetTag))
+            {
+                newRobArmTarget(hit);
+            }
+
+
+        }
+    }
+
+    //Spawn new target
+    private void newRobArmTarget(RaycastHit hit)
+    {
+
+        spawnTargetScript = hit.collider.gameObject.GetComponent<spawnTarget>();
+
+
+
+        if (Input.GetKeyDown(pressButtonKey))
+        {
+            spawnTargetScript.spawnNewTarget();
+        }
+    }
+
+    //Adjust Robot hand
+    private void moveCaseRight(RaycastHit hit)
+    {
+
+        moveArmScript = hit.collider.gameObject.GetComponent<moveArm>();
+
+
+        if (Input.GetKey(pressButtonKey))
+        {
+            moveArmScript.isMoving = true;
+            moveArmScript.right();
+        }
+        else if (Input.GetKeyUp(pressButtonKey))
+        {
+            moveArmScript.isMoving = false;
+        }
+    }
+
+    //Adjust Robot hand
+    private void moveCaseLeft(RaycastHit hit)
+    {
+
+        moveArmScript = hit.collider.gameObject.GetComponent<moveArm>();
+
+
+        if (Input.GetKey(pressButtonKey))
+        {
+            moveArmScript.isMoving = true;
+            moveArmScript.left();
+        }
+        else if (Input.GetKeyUp(pressButtonKey))
+        {
+            moveArmScript.isMoving = false;
+        }
+    }
+
+    //Adjust Robot hand
+    private void moveCaseBackward(RaycastHit hit)
+    {
+
+        moveArmScript = hit.collider.gameObject.GetComponent<moveArm>();
+
+
+        if (Input.GetKey(pressButtonKey))
+        {
+            moveArmScript.isMoving = true;
+            moveArmScript.backwards();
+        }
+        else if (Input.GetKeyUp(pressButtonKey))
+        {
+            moveArmScript.isMoving = false;
+        }
+    }
+
+    //Adjust Robot hand
+    private void moveCaseForward(RaycastHit hit)
+    {
+
+        moveArmScript = hit.collider.gameObject.GetComponent<moveArm>();
+
+
+        if (Input.GetKey(pressButtonKey))
+        {
+            moveArmScript.isMoving = true;
+            moveArmScript.forward();
+        }
+        else if (Input.GetKeyUp(pressButtonKey))
+        {
+            moveArmScript.isMoving = false;
         }
     }
 
